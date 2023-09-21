@@ -96,4 +96,19 @@ app.put("/forms/:formid", async (req, res) => {
         console.log(err);
     }
 });
+
+// delete
+app.delete("/forms/:formid", async (req, res) => {
+    const { formid } = req.params;
+
+    try {
+        const deleteForm = await pool.query(
+            "DELETE FROM form WHERE formid = $1;",
+            [formid]
+        );
+        res.json(deleteForm);
+    } catch (err) {
+        console.log(err);
+    }
+});
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
