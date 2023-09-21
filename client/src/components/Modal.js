@@ -33,6 +33,27 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
         }
     };
 
+    const editData = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(
+                `http://localhost:8000/forms/${form.formid}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                }
+            );
+
+            console.log(response);
+            if (response.status === 200) {
+                setShowModal(false);
+                getData();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -124,7 +145,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                     <input
                         className={mode}
                         type="submit"
-                        onClick={editMode ? "" : postData}
+                        onClick={editMode ? editData : postData}
                     />
                 </form>
             </div>

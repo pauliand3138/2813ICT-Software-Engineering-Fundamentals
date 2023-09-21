@@ -42,12 +42,12 @@ app.post("/forms", async (req, res) => {
         burnsevid,
         userid
     );
-    const id = uuidv4();
+    const formid = uuidv4();
     try {
         const newForm = await pool.query(
-            `INSERT INTO form(formid, location, date, landscapeid, vegtypeid, vegstageid, burnsevid, userid) VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
+            `INSERT INTO form(formid, location, date, landscapeid, vegtypeid, vegstageid, burnsevid, userid) VALUES($1, $2, $3, $4, $5, $6, $7, $8);`,
             [
-                id,
+                formid,
                 location,
                 date,
                 landscapeid,
@@ -58,6 +58,40 @@ app.post("/forms", async (req, res) => {
             ]
         );
         res.json(newForm);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+//edit
+app.put("/forms/:formid", async (req, res) => {
+    const { formid } = req.params;
+    console.log(formid);
+    const {
+        location,
+        date,
+        landscapeid,
+        vegtypeid,
+        vegstageid,
+        burnsevid,
+        userid,
+    } = req.body;
+
+    try {
+        const editForm = await pool.query(
+            "UPDATE form SET userid = $1, location = $2, date = $3, landscapeid = $4, vegtypeid = $5, vegstageid = $6, burnsevid = $7 WHERE formid = $8;",
+            [
+                userid,
+                location,
+                date,
+                landscapeid,
+                vegtypeid,
+                vegstageid,
+                burnsevid,
+                formid,
+            ]
+        );
+        res.json(editForm);
     } catch (err) {
         console.log(err);
     }
