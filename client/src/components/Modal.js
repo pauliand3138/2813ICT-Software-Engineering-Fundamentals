@@ -1,29 +1,47 @@
 import React from "react";
 import { useState } from "react";
 
-const Modal = () => {
-    const mode = "create";
+const Modal = ({ mode, setShowModal, getData, form }) => {
     const editMode = mode === "edit" ? true : false;
 
     const [data, setData] = useState({
-        userId: "",
-        location: "",
-        landscapeId: "",
-        vegTypeId: "",
-        vegStageId: "",
-        burnSeverity: "",
-        date: editMode ? "" : new Date(),
+        userid: editMode ? form.userid : "paul@test.com",
+        location: editMode ? form.location : "",
+        landscapeid: editMode ? form.landscapeid : 1,
+        vegtypeid: editMode ? form.vegtypeid : 1,
+        vegstageid: editMode ? form.vegstageid : 1,
+        burnsevid: editMode ? form.burnsevid : 1,
+        date: editMode ? form.date : new Date(),
     });
+
+    const postData = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("http://localhost:8000/forms/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (response.status === 200) {
+                console.log("WORKED");
+                setShowModal(false);
+                getData();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setData((data) => ({
-            ...data,
+        setData((prevState) => ({
+            ...prevState,
             [name]: value,
         }));
 
-        console.log(data);
+        //console.log(data);
     };
 
     return (
@@ -31,7 +49,7 @@ const Modal = () => {
             <div className="modal">
                 <div className="form-title-container">
                     <h3>Let's {mode} your research</h3>
-                    <button>X</button>
+                    <button onClick={() => setShowModal(false)}>X</button>
                 </div>
 
                 <form>
@@ -47,10 +65,10 @@ const Modal = () => {
                     <br />
                     <label>Landscape Position</label>
                     <select
-                        value={data.landscapeId}
+                        value={data.landscapeid}
                         onChange={handleChange}
-                        name="landscapeId"
-                        id="landscapeId"
+                        name="landscapeid"
+                        id="landscapeid"
                         required
                     >
                         <option value="1">Flat / Undulating</option>
@@ -61,10 +79,10 @@ const Modal = () => {
                     <br />
                     <label>Vegetation Type</label>
                     <select
-                        value={data.vegTypeId}
+                        value={data.vegtypeid}
                         onChange={handleChange}
-                        name="vegTypeId"
-                        id="vegTypeId"
+                        name="vegtypeid"
+                        id="vegtypeid"
                         required
                     >
                         <option value="1">Fern or Herb</option>
@@ -76,10 +94,10 @@ const Modal = () => {
                     <br />
                     <label>Vegetation Stage</label>
                     <select
-                        value={data.vegStageId}
+                        value={data.vegstageid}
                         onChange={handleChange}
-                        name="vegStageId"
-                        id="vegStageId"
+                        name="vegstageid"
+                        id="vegstageid"
                         required
                     >
                         <option value="1">Old</option>
@@ -91,10 +109,10 @@ const Modal = () => {
                     <br />
                     <label>Burn Severity</label>
                     <select
-                        value={data.burnSeverity}
+                        value={data.burnsevid}
                         onChange={handleChange}
-                        name="burnSevId"
-                        id="burnSevId"
+                        name="burnsevid"
+                        id="burnsevid"
                         required
                     >
                         <option value="1">Unburnt</option>
@@ -103,7 +121,11 @@ const Modal = () => {
                         <option value="4">High</option>
                         <option value="5">Extreme</option>
                     </select>
-                    <input className={mode} type="submit" />
+                    <input
+                        className={mode}
+                        type="submit"
+                        onClick={editMode ? "" : postData}
+                    />
                 </form>
             </div>
         </div>

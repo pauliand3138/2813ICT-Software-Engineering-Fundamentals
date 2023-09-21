@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import FormIcon from "./FormIcon";
+import Modal from "./Modal";
 
-const ListItem = ({ form }) => {
+const ListItem = ({ form, getData }) => {
+    const [showModal, setShowModal] = useState(false);
     return (
         <li className="list-item">
             <div className="info-container">
@@ -10,9 +12,19 @@ const ListItem = ({ form }) => {
             </div>
 
             <div className="button-container">
-                <button className="edit">Edit</button>
+                <button className="edit" onClick={() => setShowModal(true)}>
+                    Edit
+                </button>
                 <button className="delete">Delete</button>
             </div>
+            {showModal && (
+                <Modal
+                    mode={"edit"}
+                    setShowModal={setShowModal}
+                    getData={getData}
+                    form={form}
+                />
+            )}
         </li>
     );
 };

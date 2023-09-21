@@ -30,9 +30,9 @@ const App = () => {
 
     return (
         <div className="app">
-            <ListHeader listName={"🏝️Forest Health App"} />
+            <ListHeader listName={"🏝️Forest Health App"} getData={getData} />
             {sortedForms?.map((form) => (
-                <ListItem key={form.formid} form={form} />
+                <ListItem key={form.formid} form={form} getData={getData} />
             ))}
         </div>
     );
