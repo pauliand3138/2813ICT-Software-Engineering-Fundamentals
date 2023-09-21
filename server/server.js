@@ -4,6 +4,8 @@ const cors = require("cors");
 const app = express();
 const pool = require("./db");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
@@ -107,6 +109,37 @@ app.delete("/forms/:formid", async (req, res) => {
             [formid]
         );
         res.json(deleteForm);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// signup
+app.post("/signup", async (req, res) => {
+    const { email, password, name, gender, dateOfBirth } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    try {
+        await pool.query(
+            `INSERT INTO citizen_scientist (userid, password, name, gender, dateofbirth) VALUES($1, $2, $3, $4, $5)`,
+            [email, hashedPassword, name, gender, dateOfBirth]
+        );
+
+        const token = jwt.sign({ email }, "secret", { expiresIn: "1hr" });
+
+        res.json({ email, token });
+    } catch (err) {
+        console.log(err);
+        if (err) {
+            res.json({ detail: err.detail });
+        }
+    }
+});
+
+// login
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    try {
     } catch (err) {
         console.log(err);
     }

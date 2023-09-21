@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getData, form }) => {
+    const [cookies, setCookie, removeCookie] = useCookies(null);
     const editMode = mode === "edit" ? true : false;
 
     const [data, setData] = useState({
-        userid: editMode ? form.userid : "paul@test.com",
+        userid: editMode ? form.userid : cookies.Email,
         location: editMode ? form.location : "",
         landscapeid: editMode ? form.landscapeid : 1,
         vegtypeid: editMode ? form.vegtypeid : 1,
