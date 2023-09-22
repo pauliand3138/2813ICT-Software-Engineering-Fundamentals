@@ -29,6 +29,13 @@ const ListItem = ({ form, getData }) => {
 
             <div className="button-container">
                 <p>{form.date}</p>
+                <button className="view" onClick={() => setShowModal(true)}>
+                    <i
+                        class="fa-regular fa-eye"
+                        style={{ color: "#3651d9", marginRight: "5px" }}
+                    ></i>
+                    View
+                </button>
                 <button className="edit" onClick={() => setShowModal(true)}>
                     <i
                         class="fa-regular fa-pen-to-square"
