@@ -121,7 +121,7 @@ const Auth = () => {
                             handleSubmit(e, isLogin ? "login" : "signup")
                         }
                     />
-                    {error && <p>{error}</p>}
+                    {error && <p style={{ color: "red" }}>{error}</p>}
                 </form>
                 <div className="auth-options">
                     <button

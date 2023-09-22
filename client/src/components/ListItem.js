@@ -38,7 +38,7 @@ const ListItem = ({ form, getData }) => {
                     }}
                 >
                     <i
-                        class="fa-regular fa-eye"
+                        className="fa-regular fa-eye"
                         style={{ color: "#3651d9", marginRight: "5px" }}
                     ></i>
                     View
@@ -51,14 +51,14 @@ const ListItem = ({ form, getData }) => {
                     }}
                 >
                     <i
-                        class="fa-regular fa-pen-to-square"
+                        className="fa-regular fa-pen-to-square"
                         style={{ color: "#008000", marginRight: "5px" }}
                     ></i>
                     Edit
                 </button>
                 <button className="delete" onClick={deleteItem}>
                     <i
-                        class="fa-regular fa-trash-can"
+                        className="fa-regular fa-trash-can"
                         style={{ color: "#ff0000", marginRight: "5px" }}
                     ></i>
                     Delete

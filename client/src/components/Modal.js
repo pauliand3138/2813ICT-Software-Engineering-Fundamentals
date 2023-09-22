@@ -6,6 +6,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
     const [isDisabled, setIsDisabled] = useState(mode === "view");
     const editMode = mode === "edit" || mode === "view" ? true : false;
+    const [error, setError] = useState(null);
 
     const [data, setData] = useState({
         userid: editMode ? form.userid : cookies.Email,
@@ -18,6 +19,10 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
     });
 
     const postData = async (e) => {
+        if (!data.location) {
+            setError("All fields must not be empty!");
+            return;
+        }
         e.preventDefault();
         try {
             const response = await fetch("http://localhost:8000/forms/", {
@@ -27,9 +32,10 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
             });
 
             if (response.status === 200) {
-                console.log("WORKED");
+                //console.log("WORKED");
                 setShowModal(false);
                 getData();
+                setError("");
             }
         } catch (err) {
             console.log(err);
@@ -37,6 +43,11 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
     };
 
     const editData = async (e) => {
+        if (!data.location) {
+            setError("All fields must not be empty!");
+            return;
+        }
+
         e.preventDefault();
         try {
             const response = await fetch(
@@ -52,6 +63,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
             if (response.status === 200) {
                 setShowModal(false);
                 getData();
+                setError("");
             }
         } catch (err) {
             console.log(err);
@@ -150,6 +162,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         <option value="4">High</option>
                         <option value="5">Extreme</option>
                     </select>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
                     {(mode == "edit" || mode == "create") && (
                         <input
                             className={mode}

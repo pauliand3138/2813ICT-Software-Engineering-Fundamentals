@@ -19,14 +19,14 @@ const ListHeader = ({ listName, getData }) => {
             <div className="button-container">
                 <button className="create" onClick={() => setShowModal(true)}>
                     <i
-                        class="fa-solid fa-plus"
+                        className="fa-solid fa-plus"
                         style={{ color: "#ff8c00", marginRight: "5px" }}
                     ></i>
                     Add New Exploration
                 </button>
                 <button className="signout" onClick={signOut}>
                     <i
-                        class="fa-solid fa-right-from-bracket"
+                        className="fa-solid fa-right-from-bracket"
                         style={{ color: "#ffffff", marginRight: "5px" }}
                     ></i>
                     Sign Out

@@ -24,6 +24,52 @@ app.get("/forms/:userId", async (req, res) => {
     }
 });
 
+// Get user form submissions
+app.get("/:userId", async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const forms = await pool.query(
+            "SELECT * FROM citizen_scientist WHERE userId= $1",
+            [userId]
+        );
+        res.json(forms.rows);
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// edit user
+
+app.put("/:userid", async (req, res) => {
+    const { name, password, gender, dateofbirth, userid } = req.body;
+    console.log(userid);
+    if (password) {
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+        try {
+            const editUser = await pool.query(
+                "UPDATE citizen_scientist SET name = $1, password = $2, gender = $3, dateofbirth = $4 WHERE userid = $5;",
+                [name, hashedPassword, gender, dateofbirth, userid]
+            );
+            res.json(editUser);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            const editUser = await pool.query(
+                "UPDATE citizen_scientist SET name = $1, gender = $2, dateofbirth = $3 WHERE userid = $4;",
+                [name, gender, dateofbirth, userid]
+            );
+            res.json(editUser);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+});
+
 // Create new
 app.post("/forms", async (req, res) => {
     const {
