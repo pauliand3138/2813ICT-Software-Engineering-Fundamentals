@@ -192,3 +192,22 @@ select {
     padding: 10px;
     color: rgb(35, 38, 47);
 }
+
+.copyright {
+    font-size: 13px;
+    margin: 20px 0 10px;
+    color: rgb(114, 114, 144);
+}
+
+.user-email {
+    float: right;
+    font-size: 16px;
+    margin: 10px;
+    color: rgb(114, 114, 144);
+}
+
+.empty-form {
+    width: 100%;
+    margin: 50px 0 50px 0;
+    text-align: center;
+}

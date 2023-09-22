@@ -13,7 +13,7 @@ const Auth = () => {
     const [gender, setGender] = useState("Male");
     const [dateOfBirth, setDateOfBirth] = useState(null);
 
-    console.log(email, password, confirmPassword, gender, dateOfBirth);
+    //console.log(email, password, confirmPassword, gender, dateOfBirth);
 
     const viewLogin = (status) => {
         setError(null);
@@ -22,7 +22,13 @@ const Auth = () => {
 
     const handleSubmit = async (e, endpoint) => {
         e.preventDefault();
-        if (!isLogin && password !== confirmPassword) {
+        if (
+            !isLogin &&
+            (!password || !confirmPassword || !name || !gender || !dateOfBirth)
+        ) {
+            setError("All fields must not be empty!");
+            return;
+        } else if (!isLogin && password !== confirmPassword) {
             setError("Passwords do not match!");
             return;
         }

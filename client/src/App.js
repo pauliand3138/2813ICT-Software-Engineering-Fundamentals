@@ -28,12 +28,13 @@ const App = () => {
         }
     }, []);
 
-    console.log(forms);
+    //console.log(forms);
 
     const sortedForms = forms?.sort(
         (a, b) => new Date(a.date) - new Date(b.date)
     );
 
+    console.log(sortedForms);
     return (
         <div className="app">
             {!authToken && <Auth />}
@@ -43,6 +44,14 @@ const App = () => {
                         listName={"🏝️Forest Health App"}
                         getData={getData}
                     />
+                    <p className="user-email">👋 Hello! {userId}</p>
+                    {sortedForms?.length == 0 ? (
+                        <p className="empty-form">
+                            🔎You have not made any research yet.
+                        </p>
+                    ) : (
+                        <></>
+                    )}
                     {sortedForms?.map((form) => (
                         <ListItem
                             key={form.formid}
@@ -52,6 +61,9 @@ const App = () => {
                     ))}
                 </>
             )}
+            <p className="copyright">
+                © 2813ICT Software Engineering Fundamentals - Group 22
+            </p>
         </div>
     );
 };

@@ -13,7 +13,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
         vegtypeid: editMode ? form.vegtypeid : 1,
         vegstageid: editMode ? form.vegstageid : 1,
         burnsevid: editMode ? form.burnsevid : 1,
-        date: editMode ? form.date : new Date(),
+        date: editMode ? form.date : new Date().toISOString().split("T")[0],
     });
 
     const postData = async (e) => {
@@ -107,6 +107,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="vegtypeid"
                         id="vegtypeid"
                         required
+                        disabled={false}
                     >
                         <option value="1">Fern or Herb</option>
                         <option value="2">Grassy</option>

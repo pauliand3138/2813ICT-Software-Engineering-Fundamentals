@@ -131,7 +131,7 @@ app.post("/signup", async (req, res) => {
     } catch (err) {
         console.log(err);
         if (err) {
-            res.json({ detail: err.detail });
+            res.json({ detail: "Email already exist!" });
         }
     }
 });
@@ -140,6 +140,23 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
+        const users = await pool.query(
+            "SELECT * FROM citizen_scientist WHERE userid = $1",
+            [email]
+        );
+
+        if (!users.rows.length)
+            return res.json({ detail: "User does not exist in system!" });
+
+        const success = await bcrypt.compare(password, users.rows[0].password);
+
+        const token = jwt.sign({ email }, "secret", { expiresIn: "1hr" });
+
+        if (success) {
+            res.json({ email: users.rows[0].userid, token });
+        } else {
+            res.json({ detail: "Username or Password incorrect!" });
+        }
     } catch (err) {
         console.log(err);
     }

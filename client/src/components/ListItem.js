@@ -28,10 +28,19 @@ const ListItem = ({ form, getData }) => {
             </div>
 
             <div className="button-container">
+                <p>{form.date}</p>
                 <button className="edit" onClick={() => setShowModal(true)}>
+                    <i
+                        class="fa-regular fa-pen-to-square"
+                        style={{ color: "#008000", marginRight: "5px" }}
+                    ></i>
                     Edit
                 </button>
                 <button className="delete" onClick={deleteItem}>
+                    <i
+                        class="fa-regular fa-trash-can"
+                        style={{ color: "#ff0000", marginRight: "5px" }}
+                    ></i>
                     Delete
                 </button>
             </div>
