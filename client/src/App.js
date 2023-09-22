@@ -61,9 +61,21 @@ const App = () => {
                     ))}
                 </>
             )}
-            <p className="copyright">
-                © 2813ICT Software Engineering Fundamentals - Group 22
-            </p>
+            <div className="footer">
+                <p className="copyright">
+                    © 2813ICT Software Engineering Fundamentals - Group 22
+                </p>
+                <button
+                    className="edit-profile"
+                    onClick={() => console.log("Hello")}
+                >
+                    <i
+                        class="fa-regular fa-user"
+                        style={{ color: "#000000", marginRight: "5px" }}
+                    ></i>
+                    Manage Profile
+                </button>
+            </div>
         </div>
     );
 };

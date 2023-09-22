@@ -22,7 +22,8 @@ body {
     align-items: center;
 }
 
-.button-container button {
+.button-container button,
+.footer button {
     margin: 0 5px;
     padding: 5px 10px;
     font-size: 16px;
@@ -240,4 +241,29 @@ select {
     width: 100%;
     margin: 50px 0 50px 0;
     text-align: center;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-profile {
+    border: 1.5px solid black;
+    color: black;
+}
+
+.edit-profile:hover {
+    background-color: darkgrey;
+}
+
+.edit-profile:active {
+    color: white;
+    background-color: black;
+}
+
+.edit-profile:active i {
+    color: white !important;
 }

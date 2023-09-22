@@ -4,7 +4,8 @@ import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getData, form }) => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
-    const editMode = mode === "edit" ? true : false;
+    const [isDisabled, setIsDisabled] = useState(mode === "view");
+    const editMode = mode === "edit" || mode === "view" ? true : false;
 
     const [data, setData] = useState({
         userid: editMode ? form.userid : cookies.Email,
@@ -84,6 +85,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="location"
                         value={data.location}
                         onChange={handleChange}
+                        disabled={isDisabled}
                     />
                     <br />
                     <label>Landscape Position</label>
@@ -93,6 +95,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="landscapeid"
                         id="landscapeid"
                         required
+                        disabled={isDisabled}
                     >
                         <option value="1">Flat / Undulating</option>
                         <option value="2">Ridge / Hill</option>
@@ -107,7 +110,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="vegtypeid"
                         id="vegtypeid"
                         required
-                        disabled={false}
+                        disabled={isDisabled}
                     >
                         <option value="1">Fern or Herb</option>
                         <option value="2">Grassy</option>
@@ -123,6 +126,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="vegstageid"
                         id="vegstageid"
                         required
+                        disabled={isDisabled}
                     >
                         <option value="1">Old</option>
                         <option value="2">Mature</option>
@@ -138,6 +142,7 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         name="burnsevid"
                         id="burnsevid"
                         required
+                        disabled={isDisabled}
                     >
                         <option value="1">Unburnt</option>
                         <option value="2">Low</option>
@@ -145,11 +150,13 @@ const Modal = ({ mode, setShowModal, getData, form }) => {
                         <option value="4">High</option>
                         <option value="5">Extreme</option>
                     </select>
-                    <input
-                        className={mode}
-                        type="submit"
-                        onClick={editMode ? editData : postData}
-                    />
+                    {(mode == "edit" || mode == "create") && (
+                        <input
+                            className={mode}
+                            type="submit"
+                            onClick={editMode ? editData : postData}
+                        />
+                    )}
                 </form>
             </div>
         </div>

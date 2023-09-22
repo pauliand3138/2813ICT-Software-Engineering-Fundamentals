@@ -4,6 +4,7 @@ import Modal from "./Modal";
 
 const ListItem = ({ form, getData }) => {
     const [showModal, setShowModal] = useState(false);
+    const [mode, setMode] = useState(null);
 
     const deleteItem = async () => {
         try {
@@ -28,15 +29,27 @@ const ListItem = ({ form, getData }) => {
             </div>
 
             <div className="button-container">
-                <p>{form.date}</p>
-                <button className="view" onClick={() => setShowModal(true)}>
+                <p style={{ color: "gray" }}>{form.date}</p>
+                <button
+                    className="view"
+                    onClick={() => {
+                        setMode("view");
+                        setShowModal(true);
+                    }}
+                >
                     <i
                         class="fa-regular fa-eye"
                         style={{ color: "#3651d9", marginRight: "5px" }}
                     ></i>
                     View
                 </button>
-                <button className="edit" onClick={() => setShowModal(true)}>
+                <button
+                    className="edit"
+                    onClick={() => {
+                        setMode("edit");
+                        setShowModal(true);
+                    }}
+                >
                     <i
                         class="fa-regular fa-pen-to-square"
                         style={{ color: "#008000", marginRight: "5px" }}
@@ -53,7 +66,7 @@ const ListItem = ({ form, getData }) => {
             </div>
             {showModal && (
                 <Modal
-                    mode={"edit"}
+                    mode={mode}
                     setShowModal={setShowModal}
                     getData={getData}
                     form={form}
