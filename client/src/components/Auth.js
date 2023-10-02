@@ -23,8 +23,13 @@ const Auth = () => {
     const handleSubmit = async (e, endpoint) => {
         e.preventDefault();
         if (
-            !isLogin &&
-            (!password || !confirmPassword || !name || !gender || !dateOfBirth)
+            (!isLogin &&
+                (!password ||
+                    !confirmPassword ||
+                    !name ||
+                    !gender ||
+                    !dateOfBirth)) ||
+            (isLogin && (!password || !email))
         ) {
             setError("All fields must not be empty!");
             return;
