@@ -14,10 +14,13 @@ const UserModal = ({ user, getUserData, setShowUserModal }) => {
 
         if (!name) {
             setError("Name must not be empty!");
+            return;
         }
         if (password !== retypePassword) {
             setError("Passwords do not match!");
+            return;
         }
+
         try {
             const response = await fetch(
                 `http://localhost:8000/${user.userid}`,
