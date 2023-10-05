@@ -10,14 +10,14 @@ const UserModal = ({ user, getUserData, setShowUserModal }) => {
     //console.log(user);
 
     const updateUser = async (e) => {
+        e.preventDefault();
+
         if (!name) {
             setError("Name must not be empty!");
         }
         if (password !== retypePassword) {
             setError("Passwords do not match!");
         }
-        e.preventDefault();
-
         try {
             const response = await fetch(
                 `http://localhost:8000/${user.userid}`,
